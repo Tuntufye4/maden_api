@@ -4,8 +4,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/document', include('document.urls')), 
-    path('api/favourite/', include('favourite.urls')),
+    path('api/document/', include('document.urls')), 
+    path('api/favourite/', include('favourite.urls')),   
     path('api/location/', include('location.urls')),        
     path('api/message/', include('message.urls')),
     path('api/offer/', include('offer.urls')),
@@ -19,7 +19,7 @@ urlpatterns = [
                     
         
 #if settings.DEBUG:
- #   import debug_toolbar
+ #   import debug_toolbar  
  #   urlpatterns += [
  #       path('__debug__/', include(debug_toolbar.urls)),
  #   ]          
