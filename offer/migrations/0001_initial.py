@@ -8,8 +8,7 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-        ('user', '0001_initial'),
+    dependencies = [   
         ('property', '0001_initial'),
     ]
 
@@ -23,7 +22,7 @@ class Migration(migrations.Migration):
                 ('message', models.CharField(max_length=200)),
                 ('created_at', models.DateTimeField()),
                 ('property_id', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='property_offer', to='property.property')),
-                ('user_id', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='user_offer', to='user.user')),
+               # ('user_id', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='user_offer', to='user.user')),
             ],
         ),
     ]

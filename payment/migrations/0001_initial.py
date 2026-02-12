@@ -8,8 +8,7 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-        ('user', '0001_initial'),
+    dependencies = [   
         ('reservation', '0001_initial'),
         ('property', '0001_initial'),
     ]
@@ -27,7 +26,7 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField()),
                 ('property_id', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='property_pay', to='property.property')),
                 ('reservation_id', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='reservation_pay', to='reservation.reservation')),
-                ('user_id', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='user_pay', to='user.user')),
+                #('user_id', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='user_pay', to='user.user')),
             ],
-        ),
+        ),    
     ]

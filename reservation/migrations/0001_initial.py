@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('user', '0001_initial'),
+        
         ('property', '0001_initial'),
     ]
 
@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('status', models.CharField(max_length=50)),
                 ('created_at', models.DateTimeField()),
                 ('property_id', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='property_res', to='property.property')),
-                ('user_id', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='user_res', to='user.user')),
-            ],
+               # ('user_id', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='user_res', to='user.user')),
+            ],   
         ),
     ]

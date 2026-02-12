@@ -14,12 +14,12 @@ urlpatterns = [
     path('api/propertyImage/', include('propertyImage.urls')),    
     path('api/reservation/', include('reservation.urls')),  
     path('api/viewingRequest/', include('viewingRequest.urls')),  
-    path('api/user/', include('user.urls')),     
+    path('api/auth/', include('users.urls')),             
 ]        
-                    
-        
+                                           
+               
 #if settings.DEBUG:
  #   import debug_toolbar  
  #   urlpatterns += [
  #       path('__debug__/', include(debug_toolbar.urls)),
- #   ]          
+ #   ]             _  

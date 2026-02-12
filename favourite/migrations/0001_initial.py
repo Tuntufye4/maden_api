@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('user', '0001_initial'),
+        
         ('property', '0001_initial'),
     ]
 
@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('favourite_id', models.AutoField(primary_key=True, serialize=False)),
                 ('created_at', models.DateTimeField()),
                 ('property_id', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='property_fav', to='property.property')),
-                ('user_id', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='user_fav', to='user.user')),
+             #   ('user_id', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='user_fav', to='user.user')),
             ],
         ),
-    ]
+    ]       

@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('user', '0001_initial'),
+
         ('property', '0001_initial'),
     ]
 
@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('file_url', models.CharField(max_length=100)),
                 ('created_at', models.DateTimeField()),
                 ('property_id', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='property_doc', to='property.property')),
-                ('user_id', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='document_user', to='user.user')),
+             #   ('user_id', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='document_user', to='user.user')),
             ],
         ),
-    ]
+    ]     

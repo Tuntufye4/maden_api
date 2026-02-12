@@ -32,7 +32,7 @@ ALLOWED_HOSTS = ['maden-api.onrender.com','localhost']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.auth',
+    'django.contrib.auth',   
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -45,11 +45,13 @@ INSTALLED_APPS = [
     'offer',
     'payment',
     'property',
-    'propertyImage',
-    'reservation',
-    'user',
+    'propertyImage',   
+    'reservation',     
+    'users',                      
     'viewingRequest',   
-]
+]            
+   
+AUTH_USER_MODEL = 'users.User'              
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

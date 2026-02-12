@@ -1,5 +1,5 @@
 from django.db import models
-from user.models import User
+#from user.models import User
 from location.models import Location             
 
 class Property(models.Model):
@@ -15,7 +15,8 @@ class Property(models.Model):
     bathrooms = models.IntegerField()
     amenities = models.IntegerField()
     status = models.CharField(max_length=100)
-    owner_id = models.ForeignKey(User, on_delete = models.SET_NULL, null= True, related_name = 'user_prop')
+   # owner_id = models.ForeignKey(User, on_delete = models.SET_NULL, null= True, related_name = 'user_prop')
     location_id = models.ForeignKey(Location, on_delete = models.SET_NULL , null= True, related_name ='location_prop') 
     created_at = models.DateTimeField()   
     updated_at = models.DateTimeField()
+     
