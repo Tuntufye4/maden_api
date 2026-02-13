@@ -13,8 +13,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = User(    
             username=validated_data['username'],       
             first_name=validated_data.get('first_name', ''),        
-            surname=validated_data.get('last_name', ''),    
-            email=validated_data.get('email', ''),                                                         
+            last_name=validated_data.get('last_name', ''),    
+            email=validated_data.get('email', ''),                                                                         
          #   role=validated_data['role']   
         )                                 
         user.set_password(validated_data['password'])                             
