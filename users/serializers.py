@@ -13,8 +13,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = User(    
             username=validated_data['username'],       
             first_name=validated_data.get('first_name', ''),        
-            surname=validated_data.get('surname'),
-            email=validated_data.get('email', ''),                                                  
+            surname=validated_data.get('surname', ''),
+            email=validated_data.get('email', ''),                                                       
             phone_number=validated_data.get('phone_number', ''), 
          #   role=validated_data['role']   
         )                                 
