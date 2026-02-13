@@ -7,24 +7,24 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User   
-        fields = ('user_id', 'username','first_name', 'surname','email','last_name','password','phone_number')
+        fields = ('username','first_name', 'surname','email','last_name','password','phone_number')
 
     def create(self, validated_data):
         user = User(    
             username=validated_data['username', ''],   
             first_name=validated_data.get('first_name', ''),
             surname=validated_data.get('surname'),
-            email=validated_data.get('email', ''),       
+            email=validated_data.get('email', ''),                                             
             last_name=validated_data.get('last_name', ''),    
             phone_number=validated_data.get('phone_number', ''),              
         )  
-        user.set_password(validated_data['password'])
-        user.save()    
+        user.set_password(validated_data['password'])                             
+        user.save()        
         return user
     
 class UserSerializer(serializers.ModelSerializer):        
 
     class Meta:         
-        model = User
-        fields = ('user_id', 'username','first_name', 'surname','email','last_name','phone_number' )
-                  
+        model = User                 
+        fields = ('username','first_name', 'surname','email','last_name','phone_number' )
+                               
