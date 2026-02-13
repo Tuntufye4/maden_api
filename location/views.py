@@ -1,23 +1,32 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from rest_framework.decorators import action
-from django.db.models import Count
 from .models import Location
 from .serializers import LocationSerializer
 
 class LocationViewSet(viewsets.ModelViewSet):
+    """
+    CRUD for Locations.
+    """
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
-     
-    def get_queryset(self):          
-        queryset = Location.objects.all()
-              
-        return queryset
 
-    def create(self, request, *args, **kwargs):
+    # Optional: override create to avoid duplicates by country/region/city/area
+    def create(self, request, *args, **kwargs):    
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        patient = serializer.save()
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-                          
+        data = serializer.validated_data
+        location, created = Location.objects.get_or_create(
+          #  country=data.get('country').strip(),
+            region=data.get('region').strip(),
+            city=data.get('city').strip(),
+            area=data.get('area').strip(),
+            defaults={
+                'latitude': data.get('latitude', 0.0),
+                'longitude': data.get('longitude', 0.0),
+                'created_at': data.get('created_at'),
+            }
+        )
+
+        return Response(LocationSerializer(location).data, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
+             
