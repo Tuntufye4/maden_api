@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-0l(095vq#zin1_s$_ser9l5k7()s)_ye_*^5ez$ly77x=3z-pz
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['maden-api.onrender.com','localhost','127.0.0.1']     
+ALLOWED_HOSTS = ['maden-api.onrender.com','localhost']     
        
 
 CORS_ALLOWED_ORIGINS = [                      
@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',   
     'django.contrib.contenttypes',    
     'django.contrib.sessions',
-    'django.contrib.messages',
+    'django.contrib.messages',   
     'django.contrib.staticfiles',
     'rest_framework',    
     'document',
