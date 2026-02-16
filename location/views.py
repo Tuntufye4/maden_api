@@ -8,7 +8,7 @@ class LocationViewSet(viewsets.ModelViewSet):
     CRUD for Locations.
     """
     queryset = Location.objects.all()
-    serializer_class = LocationSerializer
+    serializer_class = LocationSerializer    
 
     # Optional: override create to avoid duplicates by country/region/city/area
     def create(self, request, *args, **kwargs):    
@@ -18,12 +18,10 @@ class LocationViewSet(viewsets.ModelViewSet):
         data = serializer.validated_data
         location, created = Location.objects.get_or_create(
           #  country=data.get('country').strip(),
-            region=data.get('region').strip(),
+            region=data.get('region').strip(),   
             city=data.get('city').strip(),
             area=data.get('area').strip(),
-            defaults={
-                'latitude': data.get('latitude', 0.0),
-                'longitude': data.get('longitude', 0.0),
+            defaults={   
                 'created_at': data.get('created_at'),
             }
         )

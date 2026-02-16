@@ -1,23 +1,27 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from rest_framework.decorators import action
-from django.db.models import Count
 from .models import PropertyImage
-from .serializers import propertyImageSerializer
+from .serializers import PropertyImageSerializer
 
-class propertyImageViewSet(viewsets.ModelViewSet):
+class PropertyImageViewSet(viewsets.ModelViewSet):
+    """
+    CRUD for Property Images.
+    """
     queryset = PropertyImage.objects.all()
-    serializer_class = propertyImageSerializer
-     
-    def get_queryset(self):         
-        queryset = PropertyImage.objects.all()
-        
-        return queryset           
+    serializer_class = PropertyImageSerializer
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        patient = serializer.save()
+        data = serializer.validated_data
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-      
+        # Avoid duplicates: same property + display_order
+        property_image, created = PropertyImage.objects.get_or_create(
+            property=data.get('property'),
+            display_order=data.get('display_order'),
+            defaults={'image_url': data.get('image_url')}
+        )
+
+        status_code = status.HTTP_201_CREATED if created else status.HTTP_200_OK
+        return Response(PropertyImageSerializer(property_image).data, status=status_code)
+                   

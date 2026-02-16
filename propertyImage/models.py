@@ -7,3 +7,6 @@ class PropertyImage(models.Model):
     image_url = models.ImageField()        
     display_order = models.CharField(max_length=100)
     created_at = models.DateTimeField()                        
+
+    def __str__(self):
+        return f"{self.display_order}"           
