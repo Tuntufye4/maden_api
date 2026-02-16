@@ -8,9 +8,6 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [  
-        ('location', '0001_initial'),
-    ]
 
     operations = [
         migrations.CreateModel(
@@ -30,7 +27,7 @@ class Migration(migrations.Migration):
                 ('status', models.CharField(max_length=100)),
                 ('created_at', models.DateTimeField()),
                 ('updated_at', models.DateTimeField()),
-                ('location_id', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='location_prop', to='location.location')),
+               # ('location_id', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='location_prop', to='location.location')),
                 #('owner_id', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='user_prop', to='user.user')),
             ],             
         ),

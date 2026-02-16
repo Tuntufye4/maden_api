@@ -1,65 +1,81 @@
+from django.db import transaction
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from django.db import transaction
+from rest_framework.parsers import MultiPartParser, FormParser
 from .models import Property
 from .serializers import PropertySerializer
-from propertyImage.models import PropertyImage
-from propertyImage.serializers import PropertyImageSerializer
-from location.models import Location
+
 
 class PropertyViewSet(viewsets.ModelViewSet):
-    queryset = Property.objects.all()
+    """
+    CRUD for Properties.
+    Supports multipart uploads + image upload.
+    """
+    queryset = Property.objects.all().order_by("-created_at")
     serializer_class = PropertySerializer
+    parser_classes = (MultiPartParser, FormParser)
 
+    # ---------- HELPER ----------
+    def handle_images(self, instance, request):
+        images = request.FILES.getlist("images")
+        if images:
+            instance.image_url = images[0]  # store first image only
+            instance.display_order = "1"
+            instance.save()
+
+    # ---------------- CREATE ----------------
     def create(self, request, *args, **kwargs):
-        data = request.data.copy()
         try:
             with transaction.atomic():
-                # ---------------- HANDLE LOCATION ----------------
-                region = data.pop("region", None)
-                city = data.pop("city", None)
-                area = data.pop("area", None)
-                location = None
-                if region and city and area:
-                    location, _ = Location.objects.get_or_create(
-                        region=region.strip(),
-                        city=city.strip(),
-                        area=area.strip()
-                    )
+                data = request.data.copy()
+                data.pop("images", None)
 
-                # ---------------- CREATE PROPERTY ----------------
                 serializer = self.get_serializer(data=data)
-                if not serializer.is_valid():
-                    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                serializer.is_valid(raise_exception=True)
 
-                property_instance = serializer.save(location=location)
+                instance = serializer.save()
+                self.handle_images(instance, request)
 
-                # ---------------- HANDLE BULK IMAGES ----------------
-                images = data.getlist("images") if hasattr(data, "getlist") else data.get("images") or []
-                image_objs = []
-
-                for idx, img_data in enumerate(images):
-                    if not img_data:
-                        continue
-                    image_objs.append(
-                        PropertyImage(
-                            property=property_instance,
-                            image_url=img_data,
-                            display_order=idx + 1
-                        )
-                    )
-
-                if image_objs:
-                    PropertyImage.objects.bulk_create(image_objs)
-
-                # ---------------- RESPONSE ----------------
-                response_data = self.get_serializer(property_instance).data
-                response_data["images"] = PropertyImageSerializer(
-                    property_instance.property_img.order_by("display_order"), many=True               
-                ).data
-
-                return Response(response_data, status=status.HTTP_201_CREATED)
+                return Response(
+                    PropertySerializer(instance, context={"request": request}).data,
+                    status=status.HTTP_201_CREATED,
+                )
 
         except Exception as e:
-            # Catch unexpected errors and return 400
-            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+    # ---------------- UPDATE ----------------
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        data = request.data.copy()
+        data.pop("images", None)
+
+        serializer = self.get_serializer(instance, data=data)
+        serializer.is_valid(raise_exception=True)
+
+        instance = serializer.save()
+        self.handle_images(instance, request)
+
+        return Response(
+            PropertySerializer(instance, context={"request": request}).data   
+        )
+
+    # ---------------- PATCH ----------------
+    def partial_update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        data = request.data.copy()
+        data.pop("images", None)
+
+        serializer = self.get_serializer(instance, data=data, partial=True)
+        serializer.is_valid(raise_exception=True)
+
+        instance = serializer.save()
+        self.handle_images(instance, request)
+
+        return Response(   
+            PropertySerializer(instance, context={"request": request}).data
+        )
+        
