@@ -1,65 +1,70 @@
 from django.db import transaction
-from rest_framework import viewsets, status
+from rest_framework import viewsets
 from rest_framework.response import Response
 from .models import Property
-from location.models import Location
+from .serializers import PropertySerializer    
 from propertyImage.models import PropertyImage
-from .serializers import PropertySerializer
 from propertyImage.serializers import PropertyImageSerializer
 
+
 class PropertyViewSet(viewsets.ModelViewSet):
+    """
+    CRUD for Properties.
+    Handles nested Location and bulk PropertyImages via serializer.
+    """
     queryset = Property.objects.all()
     serializer_class = PropertySerializer
 
-    def get_queryset(self):
-        return Property.objects.all()
-
     def create(self, request, *args, **kwargs):
-        data = request.data.copy()
-
-        # ---------------- HANDLE LOCATION ----------------
-        region = data.pop("region", None)
-        city = data.pop("city", None)
-        area = data.pop("area", None)
-        location = None
-
-        if region and city and area:
-            location, _ = Location.objects.get_or_create(
-                region=region.strip(),
-                city=city.strip(),
-                area=area.strip()
-            )
-
-        # ---------------- CREATE PROPERTY + IMAGES ATOMICALLY ----------------
+        """
+        Create a Property with optional nested Location and multiple images.
+        """
         with transaction.atomic():
-            # Create Property
+            data = request.data.copy()
+
+            # ---------------- HANDLE NESTED LOCATION ----------------
+            region = data.pop("region", None)
+            city = data.pop("city", None)
+            area = data.pop("area", None)
+            location = None
+            if region and city and area:
+                from location.models import Location
+                location, _ = Location.objects.get_or_create(
+                    region=region.strip(),
+                    city=city.strip(),
+                    area=area.strip()
+                )
+
+            # ---------------- CREATE PROPERTY ----------------
             serializer = self.get_serializer(data=data)
             serializer.is_valid(raise_exception=True)
             property_instance = serializer.save(location=location)
 
-            # Handle Images
+            # ---------------- HANDLE BULK IMAGES ----------------
             images = data.getlist("images") if hasattr(data, "getlist") else data.get("images", [])
-            created_images = []
+            image_objs = []
 
             for idx, img_data in enumerate(images):
-                # img_data can be a file or a URL
-                img_serializer = PropertyImageSerializer(
-                    data={
-                        "property": property_instance.id,  # pass ID if serializer uses PrimaryKeyRelatedField
-                        "image_url": img_data,
-                        "display_order": idx + 1
-                    }
-                )
-                if img_serializer.is_valid():
-                    img_instance = img_serializer.save()
-                    created_images.append(img_serializer.data)
-                else:
-                    # optionally log errors
-                    print(f"Invalid image at index {idx}: {img_serializer.errors}")
+                if not img_data:
                     continue
+                # If img_data is a file or URL, append to list
+                image_objs.append(
+                    PropertyImage(
+                        property=property_instance,
+                        image_url=img_data,
+                        display_order=idx + 1
+                    )
+                )
 
-        # ---------------- RESPONSE ----------------
-        response_data = self.get_serializer(property_instance).data
-        response_data["images"] = created_images
-        return Response(response_data, status=status.HTTP_201_CREATED)
-          
+            if image_objs:
+                PropertyImage.objects.bulk_create(image_objs)
+
+            # ---------------- RESPONSE ----------------
+            response_data = self.get_serializer(property_instance).data
+            # Include created images in response
+            response_data["images"] = PropertyImageSerializer(
+                property_instance.property_img.order_by("display_order"), many=True
+            ).data
+
+            return Response(response_data)
+             
