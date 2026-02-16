@@ -11,7 +11,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User(    
-            username=validated_data['username'],       
+            username=validated_data['username'],         
             first_name=validated_data.get('first_name', ''),        
             last_name=validated_data.get('last_name', ''),    
             email=validated_data.get('email', ''),                                                                         
@@ -19,7 +19,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         )                                 
         user.set_password(validated_data['password'])                             
         user.save()        
-        return user
+        return user   
     
 class UserSerializer(serializers.ModelSerializer): 
  #   role_display = serializers.CharField(source='get_role_display', read_only=True)          

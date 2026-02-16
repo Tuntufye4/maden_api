@@ -25,15 +25,23 @@ SECRET_KEY = 'django-insecure-0l(095vq#zin1_s$_ser9l5k7()s)_ye_*^5ez$ly77x=3z-pz
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['maden-api.onrender.com','localhost']     
+ALLOWED_HOSTS = ['maden-api.onrender.com','localhost','127.0.0.1']     
        
+
+CORS_ALLOWED_ORIGINS = [                      
+    "http://localhost:5173",  # Vite dev server    
+]         
+        
+CORS_ALLOW_ALL_ORIGINS = True  # dev only
+
+CORS_ALLOW_CREDENTIALS = True   
 
 # Application definition            
 
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',   
-    'django.contrib.contenttypes',
+    'django.contrib.contenttypes',    
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -46,10 +54,11 @@ INSTALLED_APPS = [
     'propertyImage',   
     'reservation',     
     'users',                      
-    'viewingRequest',   
+    'viewingRequest',               
 ]            
+                 
    
-AUTH_USER_MODEL = 'users.User'              
+AUTH_USER_MODEL = 'users.user'     
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -118,7 +127,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'UTC'    
 
 USE_I18N = True
 
@@ -128,7 +137,7 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
+# https://docs.djangoproject.com/en/3.2/howto/static-files/   
 
 STATIC_URL = '/static/'
 

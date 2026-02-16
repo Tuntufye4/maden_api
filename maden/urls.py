@@ -12,7 +12,7 @@ urlpatterns = [
     path('api/propertyImage/', include('propertyImage.urls')),    
     path('api/reservation/', include('reservation.urls')),  
     path('api/viewingRequest/', include('viewingRequest.urls')),  
-    path('api/auth/', include('users.urls')),             
+    path('api/auth/', include('users.urls')),                          
 ]        
                                            
                
