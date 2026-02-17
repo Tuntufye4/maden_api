@@ -10,7 +10,7 @@ class Property(models.Model):
     listing_type = models.CharField(max_length=50, null=True)
     price = models.FloatField()
     is_negotiable = models.BooleanField(default=False)   
-    size = models.IntegerField(null=True, blank=True)
+    size = models.IntegerField(null=True, blank=True)     
     bedrooms = models.IntegerField(null=True, blank=True)       
     bathrooms = models.IntegerField(null=True, blank=True)
     amenities = models.CharField(max_length=200, blank=True, null=True)  # Store amenities as list
