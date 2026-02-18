@@ -6,10 +6,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-0l(095vq#zin1_s$_ser9l5k7()s)_ye_*^5ez$ly77x=3z-pz'
 DEBUG = True
-ALLOWED_HOSTS = ['maden-api.onrender.com']                                                       
-    
+ALLOWED_HOSTS = ['maden-api.onrender.com','127.0.0.1']                                                            
+        
 # ---------------- CORS ----------------   
-INSTALLED_APPS = [                
+INSTALLED_APPS = [                      
     'django.contrib.admin',  
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -21,7 +21,7 @@ INSTALLED_APPS = [
     'document',
     'favourite',  
     'message',
-    'property',
+    'property',  
     'reservation',
     'users',
     'viewingRequest',
