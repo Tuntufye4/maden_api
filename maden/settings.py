@@ -18,13 +18,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',   
     'rest_framework',
     'corsheaders',   # ⚠️ make sure corsheaders is installed   
-    'document',
-    'favourite',  
-    'message',
-    'property',  
+    'document',       
+    'favourite',                     
     'reservation',
-    'users',
-    'viewingRequest',
+    'messageprop',      
+    'users',               
+    'property',      
+    'viewingRequest',        
 ]
   #        
 MIDDLEWARE = [

@@ -12,7 +12,7 @@ class PropertyViewSet(viewsets.ModelViewSet):
     """
     queryset = Property.objects.all().order_by("-created_at")
     serializer_class = PropertySerializer
-    parser_classes = (MultiPartParser, FormParser)   
+    parser_classes = (MultiPartParser, FormParser)     
 
     def save_property(self, instance=None, partial=False):
         data = self.request.data.copy()
@@ -47,3 +47,4 @@ class PropertyViewSet(viewsets.ModelViewSet):
         with transaction.atomic():
             instance = self.save_property(instance, partial=True)
         return Response(PropertySerializer(instance, context={"request": request}).data)
+    

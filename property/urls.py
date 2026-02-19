@@ -5,4 +5,4 @@ from .views import PropertyViewSet
 router = DefaultRouter()
 router.register(r'', PropertyViewSet, basename='property')
 
-urlpatterns = router.urls                       
+urlpatterns = router.urls                           

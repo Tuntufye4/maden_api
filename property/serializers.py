@@ -7,7 +7,7 @@ class PropertySerializer(serializers.ModelSerializer):
     image = serializers.ImageField(write_only=True, required=False)
     # Read-only absolute URL for frontend
     image_url = serializers.SerializerMethodField(read_only=True)
-    
+      
     class Meta:
         model = Property     
         fields = "__all__"
@@ -19,7 +19,7 @@ class PropertySerializer(serializers.ModelSerializer):
                 return request.build_absolute_uri(obj.image_url.url)
             return obj.image_url.url
         return None
-
+   
     def create(self, validated_data):
         image = validated_data.pop("image", None)
         if image:
@@ -31,4 +31,4 @@ class PropertySerializer(serializers.ModelSerializer):
         if image:
             validated_data["image_url"] = image
         return super().update(instance, validated_data)
-    
+         

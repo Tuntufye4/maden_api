@@ -5,4 +5,4 @@ from .views import ViewingRequestViewSet
 router = DefaultRouter()
 router.register(r'', ViewingRequestViewSet, basename='viewingRequest')
 
-urlpatterns = router.urls                              
+urlpatterns = router.urls                                      
