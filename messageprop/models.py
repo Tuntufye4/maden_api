@@ -9,12 +9,12 @@ class MessageProp(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
         null=True,    
-        related_name='message_prop'        
+        related_name='message_prop'                       
     )
-    property_id = models.ForeignKey(Property, on_delete=models.CASCADE)
+    property = models.ForeignKey(Property, on_delete=models.CASCADE)
     text_message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)       
     
     def __str__(self):
         return f"Message from {self.user.username} for {self.property.id}"
-                                
+                                      

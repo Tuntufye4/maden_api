@@ -43,7 +43,7 @@ class PropertyViewSet(viewsets.ModelViewSet):
         return Response(PropertySerializer(instance, context={"request": request}).data)
 
     def partial_update(self, request, *args, **kwargs):
-        instance = self.get_object()
+        instance = self.get_object()   
         with transaction.atomic():
             instance = self.save_property(instance, partial=True)
         return Response(PropertySerializer(instance, context={"request": request}).data)
