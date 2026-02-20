@@ -3,25 +3,21 @@ from .models import ViewingRequest
 from property.models import Property  
 from property.serializers import PropertySerializer  # nested property info
 
+
 class ViewingRequestSerializer(serializers.ModelSerializer):
-    # Nested property info for frontend convenience
-    property = PropertySerializer(read_only=True)
-            
-    # Write-only field to create/update viewing requests via property ID
-    property = serializers.PrimaryKeyRelatedField(
-        queryset=Property.objects.all(),
-      #  source='property',  # maps to the ForeignKey
-        write_only=True    
-    )          
-                 
-    class Meta:   
+    property_detail = PropertySerializer(source="property", read_only=True)
+    property = serializers.PrimaryKeyRelatedField(queryset=Property.objects.all(), write_only=True)
+
+    class Meta:
         model = ViewingRequest
-        fields = [           
-            "id",   
+        fields = [
+            "id",
             "user",
-            "property",      # nested property info       # write-only for POST/PUT
+            "property",        # write-only
+            "property_detail", # nested for GET
             "requested_date",
-            "requested_time",
+            "requested_time",  
             "created_at",
         ]
+
         read_only_fields = ["id", "user", "created_at"]
