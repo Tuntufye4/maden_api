@@ -8,10 +8,10 @@ class ViewingRequest(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name="viewing_requests"
-    )   
+        related_name="viewing_requests"  
+    )     
     
-    property = models.ForeignKey(   
+    property = models.ForeignKey(               
         Property,
         on_delete=models.CASCADE,
         related_name="viewing_requests"   
@@ -23,5 +23,5 @@ class ViewingRequest(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user} → {self.property} on {self.requested_date}"
+        return f"{self.user} → {self.property} on {self.requested_date}"   
                           

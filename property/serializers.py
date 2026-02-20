@@ -8,7 +8,7 @@ class PropertySerializer(serializers.ModelSerializer):
     # Read-only absolute URL for frontend
     image_url = serializers.SerializerMethodField(read_only=True)
       
-    class Meta:
+    class Meta:   
         model = Property     
         fields = "__all__"
 
