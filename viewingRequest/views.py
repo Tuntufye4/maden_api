@@ -15,4 +15,4 @@ class ViewingRequestViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         # Auto-attach the logged-in user
         serializer.save(user=self.request.user)
-     
+        

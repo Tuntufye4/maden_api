@@ -15,7 +15,7 @@ class ViewingRequest(models.Model):
         Property,
         on_delete=models.CASCADE,
         related_name="viewing_requests"   
-    )      
+    )        
    
     requested_date = models.DateField()          
     requested_time = models.TimeField()
