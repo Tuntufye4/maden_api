@@ -10,7 +10,8 @@ urlpatterns = [
     path('api/property/', include('property.urls')),     
     path('api/reservation/', include('reservation.urls')),   
     path('api/viewingRequest/', include('viewingRequest.urls')),            
-    path('api/messageprop/', include('messageprop.urls')),              
+    path('api/messageprop/', include('messageprop.urls')),        
+    path('api/housecontract/', include('housecontract.urls')),                                 
     path('api/auth/', include('users.urls')),                               
 ]              
           

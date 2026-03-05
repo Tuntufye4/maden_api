@@ -24,7 +24,8 @@ INSTALLED_APPS = [
     'messageprop',      
     'users',               
     'property',      
-    'viewingRequest',        
+    'viewingRequest',   
+    'housecontract',                                        
 ]
   #        
 MIDDLEWARE = [
