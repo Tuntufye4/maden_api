@@ -39,7 +39,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# Allow your React app to call API
+# Allow your React app to call API   
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
 ]

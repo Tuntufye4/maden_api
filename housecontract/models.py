@@ -8,17 +8,18 @@ class RentContract(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="house_contract"         
-    )      
+    )         
     property = models.ForeignKey(                              
         Property,
-        on_delete=models.CASCADE,
+        on_delete=models.CASCADE,   
         related_name="house_contract"   
-    )  
+    )    
     tenant_name = models.CharField(max_length=100, null=True) 
     tenant_email = models.CharField(max_length=150, null=True)  
     tenant_phone = models.BigIntegerField()          
     contract_startdate = models.DateField()   
-
+    created_at = models.DateTimeField(auto_now_add=True, null=True)                          
+          
     def __str__(self):
-        return f"{self.user} → {self.property} on {self.contract_startdate}"   
+        return f"{self.user} → {self.property} on {self.created_at}"       
                           

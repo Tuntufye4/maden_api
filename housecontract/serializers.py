@@ -10,16 +10,16 @@ class HouseContractSerializer(serializers.ModelSerializer):
 
     class Meta:       
         model = RentContract  
-        fields = [
+        fields = [   
             "id",
             "user",
             "property",        # write-only
-            "property_detail", # nested for GET
-            "tenant_name",
+            "property_detail", # nested for GET    
+            "tenant_name",   
             "tenant_email",
-            "tenant_phone",
+            "tenant_phone",    
             "contract_startdate", 
-            "created_at",             
+            "created_at",              
         ]
 
-        read_only_fields = ["id", "user", "created_at"]
+        read_only_fields = ["id", "user", "created_at"]                 
