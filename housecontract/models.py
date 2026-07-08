@@ -3,7 +3,7 @@ from django.conf import settings
 from property.models import Property           
         
 class RentContract(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True)    
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -16,8 +16,11 @@ class RentContract(models.Model):
     )    
     tenant_name = models.CharField(max_length=100, null=True) 
     tenant_email = models.CharField(max_length=150, null=True)  
-    tenant_phone = models.BigIntegerField()          
-    contract_startdate = models.DateField()   
+    tenant_phone = models.BigIntegerField()
+    national_id = models.CharField(max_length=100, null=True)                             
+    income_source = models.CharField(max_length=150, null=True)
+    family_size = models.BigIntegerField(null=True)                                       
+    contract_startdate = models.DateField()            
     created_at = models.DateTimeField(auto_now_add=True, null=True)                          
           
     def __str__(self):

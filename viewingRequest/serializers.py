@@ -16,7 +16,7 @@ class ViewingRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = ViewingRequest
         fields = [
-            "id",
+            "id",    
             "user",
             "property",        # write-only
             "property_detail", # nested for GET
